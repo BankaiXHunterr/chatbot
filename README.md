@@ -1,71 +1,97 @@
-# ProtonDatalabs AI developer Assignment - Chatbot application
+# Running the Chatbot Application
 
-## Preface
+Congratulations on completing the ProtonDatalabs AI Developer Assignment! Below are the instructions to follow to run the application, along with an explanation of the choices made during development.
 
-At ProtonDatalabs, we leverage cutting-age gen-AI solutions to deliver buisness value to our clients. We are able to do this by combining aspects from AI modelling to full-stack developement.
+## Instructions
 
-In this assignment, your task is to build a chatbot application which takes a file as an input and answers user's query. The goal of this application is to accurately provide answers based on the uploaded file. This application could be used as an assistant to quickly answer questions or summarize facts from files containing large amounts of text data, making our lives easier.
+### Backend Setup:
 
-## Project structure
+1. **Obtain API Key**: Obtain the API key required for the Google services. This key will be used for language modeling and other functionalities.
 
-In this project you find 2 directories
+2. **Environment Setup**: 
+   - Create an `.env` file inside the `backend` folder.
+   - Store the obtained API key as `GOOGLE_API_KEY`[https://aistudio.google.com/app/prompts/new_chat] within the `.env` file.
 
-1. `backend` containing the server side **python** code
-2. `frontend` containing the client side **typescript** code.\
-   In both these directories, it is your job to complete the missing modules and add necessary functionalities to make the app fully functional.
+3. **Python Environment Setup**: 
+   - Ensure Python 3.10 or above is installed on your system.
+   - Use Conda package manager to set up a virtual environment named `chatbot`:
+     ```
+     conda create -n chatbot python=3.10
+     conda activate chatbot
+     ```
 
-### Backend
+4. **Install Dependencies**: 
+   - Navigate to the `backend` directory in the terminal.
+   - Install the required Python packages using pip:
+     ```
+     pip install -r requirements.txt
+     ```
 
-**Requirements**: Python 3.10 or above. We will test your submission against Python 3.10.
+5. **Running the Backend Server**: 
+   - In the terminal, navigate to the `backend` directory.
+   - Execute the following command to start the FastAPI server:
+     ```
+     uvicorn main:app --reload
+     ```
 
-1. `main.py` which is the entry point to our server
-2. This project has a few Python packages as dependencies, you can install them in your virtual environment using `requirements.txt`. If you were to use other dependencies, then please add them to `requirements.txt`.
-3. We will be using [`conda`](https://docs.conda.io/projects/conda/en/stable/) package manager to create a virtual environment `chatbot` using `conda create -n chatbot python=3.10` and then `conda activate chatbot` to activate the environment.
-4. Then install the python packages using `pip install -r requirements.txt`
+   The server will start running at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
-#### Running the backend server
+### Frontend Setup:
 
-To launch the server, navigate to the `backend` directory and run:
+1. **Node.js Installation**: 
+   - Ensure Node.js v20.11.1 or above is installed on your system.
+   - You can download and install Node.js from [here](https://nodejs.org/en/).
 
-##### `uvicorn main:app --reload`
+2. **Environment Setup**:
+   - Open a new terminal window.
 
-This will start the server at [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+3. **Navigate to Frontend Directory**: 
+   - In the terminal, navigate to the `frontend` directory of the project.
 
-### Frontend
+4. **Install Dependencies**:
+   - Run the following command to install the required Node.js dependencies:
+     ```
+     npm install
+     ```
 
-The project structure within the `frontend` directory follows the official `create-react-app` structure as in the [docs](https://create-react-app.dev/docs/folder-structure). Some of the files have been removed for convenience & brevity.
+5. **Launch the React App**: 
+   - After installing dependencies, run the following command to start the development server:
+     ```
+     npm start
+     ```
 
-**Requirements**: We are using `node V20.11.1` and `npm 10.2.4`. They can be downloaded via [installer](https://nodejs.org/en). For more information check [here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+   This will open the application in your default web browser at [http://localhost:3000](http://localhost:3000/).
 
-#### How to launch the react app
+## Explanation of Choices
 
-1. Navigate to the `frontend` directory and run `npm install`
-2. Then you can run:
+### Technology Stack:
 
-   ##### `npm start`
+- **Language Models (LLMs)**: 
+  - Utilized Langachain and Google Gemini for natural language processing tasks due to their robustness and performance.
 
-   This will launch the app in development mode.\
-   Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Vectorization and Storage**: 
+  - Employed FAISS for vectorization and vector storage. FAISS offers efficient and scalable solutions for similarity search tasks.
 
-The page will reload if you make edits. You will also see any lint errors in the console.
+- **Styling**: 
+  - Chose Tailwind CSS for styling due to its utility-first approach, which enables rapid development and easy customization.
 
-## The assignment
+### Backend Decisions:
 
-### Backend
+- **FastAPI**: 
+  - Chose FastAPI for backend development due to its high performance, asynchronous support, and automatic API documentation generation.
 
-1. Currently, the server returns `hello world!` everytime user makes a query, which needs to be changed. Modify the `/predict` endpoint to acheive this. You are free to use any architecture here: API based or open-source LLMs. The end goal in either case is to have a meaningful result based on the user query and uploaded file.
-2. Implement the storage and handling of the incoming files from the frontend. You can use any database management system like MongoDB or MySQL for this.
+- **API Key Handling**: 
+  - Stored the Google API key securely in an environment variable to ensure sensitive information is not exposed in the codebase.
 
-### Frontend
+### Frontend Decisions:
 
-1. Add a pop up which notifies that the file has been uploaded properly.
-2. Extend the app's functionality to accept `.txt`,`.docx` & `.pdf` files in addition to `.csv` files.
-3. Add some styling to the bare bones app structure. You are free to use any popular CSS frameworks like Tailwind or UI libraries like Material or Chakra UI. Bonus points for creative and innovative designs.
+- **React Framework**: 
+  - Selected React for frontend development to build a dynamic and interactive user interface.
 
-## Note
+- **File Upload Handling**: 
+  - Implemented support for multiple file formats (.txt, .docx, .pdf, .csv) to enhance user flexibility and accommodate different types of documents.
 
-1. We expect that the app behaves similar to real world applications we interact with everyday. So think from the point of view of a user and handle all the possible edge cases which may occur while running the app. For instance, you can think of cases when the user has uploaded a very large file (>100mb) or a unsupported file type like video/mp3.
-2. **Important** We want you to uphold your best programming practices (SOLID, OOPs, type hints) for the completion of this assignment, as if your code would end up in production and interact with other software components. A robust solution which covers fewer points will be judged more favourably than a complete solution that cuts corners.
-3. We will check your assignment by doing a full run of your app with all possible edge cases and see how the results look. Please ensure the program is in a finished state so that we can execute even though you might not have
-   completed it in full.
-4. Finally, be sure to provide a `README` document detailing your approach to completing the assignment, including the decisions you took and the reasons behind them.
+- **Styling Framework**: 
+  - Opted for Tailwind CSS for styling to maintain consistency and ease of development, allowing for rapid prototyping and responsive design.
+
+By following these instructions, you should be able to run the chatbot application successfully and experience its functionalities firsthand. If you encounter any issues or have further questions, feel free to reach out for assistance. Happy coding!
