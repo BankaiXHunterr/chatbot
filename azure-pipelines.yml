@@ -1,0 +1,21 @@
+trigger:
+- none  # Manual trigger for initial deployment
+
+pool:
+  vmImage: ubuntu-latest  # Or a Linux agent pool you have configured
+
+variables:
+  backendImageName: 'Dockerfile'  # Replace with your backend image name
+  frontendImageName: 'Dockerfile_frontend'  # Replace with your frontend image name
+  acrName: 'bankairepo'  # Replace with your ACR name
+  acrLoginServer: $(acrName).azurecr.io  # Replace with ACR login server
+  resourceGroupName: '<your-resource-group-name>'  # Replace with your resource group name
+  appName: '<your-web-app-name>'  # Replace with your web app name
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build_Backend
+    steps:
+    - script: docker build -t $(backendImageName) .
+    - publish: $(backendImageName), target:
